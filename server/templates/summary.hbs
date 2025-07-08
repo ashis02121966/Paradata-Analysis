@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: rgba(0, 0, 0, 0.03);
+            z-index: -1;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .header .subtitle {
+            color: #4facfe;
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .summary-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+        }
+        .summary-card h2 {
+            margin: 0 0 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .summary-card p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .department-analysis {
+            margin-bottom: 40px;
+        }
+        .department-analysis h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .dept-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .dept-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #4facfe;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .dept-card h4 {
+            margin: 0 0 15px 0;
+            color: #4facfe;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .dept-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        .stat-item .number {
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .stat-item .label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .salary-analysis {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #00f2fe;
+        }
+        .salary-analysis h3 {
+            margin: 0 0 20px 0;
+            color: #333;
+            font-size: 20px;
+        }
+        .salary-ranges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .salary-range {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .salary-range .range-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .salary-range .range-count {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4facfe;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+        .meta-info div {
+            text-align: center;
+        }
+        .meta-info strong {
+            display: block;
+            color: #333;
+            font-size: 16px;
+        }
+        .meta-info span {
+            color: #666;
+            font-size: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .footer .company-info {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">SUMMARY REPORT</div>
+    <div class="container">
+        <div class="header">
+            <h1>{{title}}</h1>
+            <p class="subtitle">Executive Summary & Key Metrics</p>
+            {{#if description}}
+            <p style="color: #666; margin-top: 15px; font-style: italic;">{{description}}</p>
+            {{/if}}
+        </div>
+        
+        <div class="meta-info">
+            <div>
+                <strong>{{generatedDate}}</strong>
+                <span>Report Date</span>
+            </div>
+            <div>
+                <strong>{{generatedTime}}</strong>
+                <span>Generated Time</span>
+            </div>
+            <div>
+                <strong>{{totalUsers}}</strong>
+                <span>Total Records</span>
+            </div>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h2>{{totalUsers}}</h2>
+                <p>Total Employees</p>
+            </div>
+            <div class="summary-card">
+                <h2>${{avgSalary}}</h2>
+                <p>Average Salary</p>
+            </div>
+        </div>
+
+        {{#if departmentStats}}
+        <div class="department-analysis">
+            <h3>Department Analysis</h3>
+            <div class="dept-stats">
+                {{#each departmentStats}}
+                <div class="dept-card">
+                    <h4>{{department}}</h4>
+                    <div class="dept-stats-grid">
+                        <div class="stat-item">
+                            <span class="number">{{count}}</span>
+                            <span class="label">Employees</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="number">${{avgSalary}}</span>
+                            <span class="label">Avg Salary</span>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if salaryRanges}}
+        <div class="salary-analysis">
+            <h3>Salary Distribution Analysis</h3>
+            <div class="salary-ranges">
+                {{#each salaryRanges}}
+                <div class="salary-range">
+                    <div class="range-label">{{label}}</div>
+                    <div class="range-count">{{count}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="footer">
+            <div class="company-info">ABC Corporation - Executive Summary Report</div>
+            <p>This summary provides key insights into organizational structure and compensation analysis.</p>
+            <p>Generated automatically by the Business Intelligence System | © 2024 All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
